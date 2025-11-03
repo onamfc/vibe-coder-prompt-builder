@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ProgressBar } from './components/ProgressBar';
 import { WelcomeStep } from './components/steps/WelcomeStep';
 import { ProjectTypeStep } from './components/steps/ProjectTypeStep';
@@ -6,6 +6,7 @@ import { ProjectDetailsStep } from './components/steps/ProjectDetailsStep';
 import { FeaturesStep } from './components/steps/FeaturesStep';
 import { TechStackStep } from './components/steps/TechStackStep';
 import { TestingStep } from './components/steps/TestingStep';
+import { ProfessionalRequirementsStep } from './components/steps/ProfessionalRequirementsStep';
 import { FinalDetailsStep } from './components/steps/FinalDetailsStep';
 import { PromptGenerationStep } from './components/steps/PromptGenerationStep';
 import { ProjectData } from './types';
@@ -16,8 +17,9 @@ const steps = [
   { title: 'Features', completed: false },
   { title: 'Tech Stack', completed: false },
   { title: 'Testing', completed: false },
+  { title: 'Professional Features', completed: false },
   { title: 'Final Details', completed: false },
-  { title: 'Generate Prompt', completed: false }
+  { title: 'Generate Prompt', completed: false },
 ];
 
 function App() {
@@ -32,28 +34,40 @@ function App() {
       frontend: '',
       backend: '',
       database: '',
-      hosting: ''
+      hosting: '',
     },
     testing: {
       approach: '',
-      tools: []
+      tools: [],
     },
-    additionalRequirements: []
+    professionalRequirements: {
+      userAccounts: false,
+      sensitiveData: false,
+      adminPanel: false,
+      mobileResponsive: false,
+      realTimeFeatures: false,
+      fileUploads: false,
+      payments: false,
+      searchFeature: false,
+      analytics: false,
+      multiLanguage: false,
+    },
+    additionalRequirements: [],
   });
 
   const updateProjectData = (field: string, value: any) => {
-    setProjectData(prev => ({
+    setProjectData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const nextStep = () => {
-    setCurrentStep(prev => Math.min(prev + 1, 7));
+    setCurrentStep((prev) => Math.min(prev + 1, 8));
   };
 
   const prevStep = () => {
-    setCurrentStep(prev => Math.max(prev - 1, 0));
+    setCurrentStep((prev) => Math.max(prev - 1, 0));
   };
 
   const restartWizard = () => {
@@ -68,13 +82,25 @@ function App() {
         frontend: '',
         backend: '',
         database: '',
-        hosting: ''
+        hosting: '',
       },
       testing: {
         approach: '',
-        tools: []
+        tools: [],
       },
-      additionalRequirements: []
+      professionalRequirements: {
+        userAccounts: false,
+        sensitiveData: false,
+        adminPanel: false,
+        mobileResponsive: false,
+        realTimeFeatures: false,
+        fileUploads: false,
+        payments: false,
+        searchFeature: false,
+        analytics: false,
+        multiLanguage: false,
+      },
+      additionalRequirements: [],
     });
   };
 
@@ -139,6 +165,15 @@ function App() {
         );
       case 6:
         return (
+          <ProfessionalRequirementsStep
+            requirements={projectData.professionalRequirements}
+            onUpdate={(requirements) => updateProjectData('professionalRequirements', requirements)}
+            onNext={nextStep}
+            onPrev={prevStep}
+          />
+        );
+      case 7:
+        return (
           <FinalDetailsStep
             additionalRequirements={projectData.additionalRequirements}
             onUpdate={updateProjectData}
@@ -146,13 +181,8 @@ function App() {
             onPrev={prevStep}
           />
         );
-      case 7:
-        return (
-          <PromptGenerationStep
-            projectData={projectData}
-            onRestart={restartWizard}
-          />
-        );
+      case 8:
+        return <PromptGenerationStep projectData={projectData} onRestart={restartWizard} />;
       default:
         return <WelcomeStep onNext={nextStep} />;
     }
@@ -168,10 +198,8 @@ function App() {
             steps={steps}
           />
         )}
-        
-        <div className="animate-fadeIn">
-          {renderStep()}
-        </div>
+
+        <div className="animate-fadeIn">{renderStep()}</div>
       </div>
     </div>
   );

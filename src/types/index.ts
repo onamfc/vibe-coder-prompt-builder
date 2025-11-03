@@ -14,6 +14,18 @@ export interface ProjectData {
     approach: string;
     tools: string[];
   };
+  professionalRequirements: {
+    userAccounts: boolean;
+    sensitiveData: boolean;
+    adminPanel: boolean;
+    mobileResponsive: boolean;
+    realTimeFeatures: boolean;
+    fileUploads: boolean;
+    payments: boolean;
+    searchFeature: boolean;
+    analytics: boolean;
+    multiLanguage: boolean;
+  };
   additionalRequirements: string[];
 }
 

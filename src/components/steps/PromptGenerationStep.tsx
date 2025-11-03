@@ -8,7 +8,10 @@ interface PromptGenerationStepProps {
   onRestart: () => void;
 }
 
-export const PromptGenerationStep: React.FC<PromptGenerationStepProps> = ({ projectData, onRestart }) => {
+export const PromptGenerationStep: React.FC<PromptGenerationStepProps> = ({
+  projectData,
+  onRestart,
+}) => {
   const [generatedPrompt, setGeneratedPrompt] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -46,7 +49,8 @@ export const PromptGenerationStep: React.FC<PromptGenerationStepProps> = ({ proj
       <div className="max-w-4xl mx-auto text-center">
         <LoadingSpinner message="Creating your detailed project specification..." />
         <p className="mt-4 text-gray-300">
-          Our AI architect is crafting a comprehensive technical specification with implementation details, design guidelines, and deployment strategy
+          Our AI architect is crafting a comprehensive technical specification with implementation
+          details, design guidelines, and deployment strategy
         </p>
       </div>
     );
@@ -62,9 +66,10 @@ export const PromptGenerationStep: React.FC<PromptGenerationStepProps> = ({ proj
           Your Comprehensive Project Specification is Ready!
         </h2>
         <p className="text-gray-300 mb-6">
-          This detailed specification contains everything an AI assistant needs to build your professional-grade MVP
+          This detailed specification contains everything an AI assistant needs to build your
+          professional-grade MVP
         </p>
-        
+
         <div className="flex justify-center gap-4 mb-8">
           <button
             onClick={copyToClipboard}

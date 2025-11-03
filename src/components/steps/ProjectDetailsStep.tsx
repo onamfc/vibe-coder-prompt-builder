@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {Wand2, RefreshCw, Sparkles} from 'lucide-react';
+import { Wand2, RefreshCw, Sparkles } from 'lucide-react';
 
 interface ProjectDetailsStepProps {
   projectType: string;
@@ -18,11 +18,10 @@ export const ProjectDetailsStep: React.FC<ProjectDetailsStepProps> = ({
   targetAudience,
   onUpdate,
   onNext,
-  onPrev
+  onPrev,
 }) => {
   const [enhancedDescription, setEnhancedDescription] = useState<string>('');
   const [enhancing, setEnhancing] = useState(false);
-  const [showEnhancer, setShowEnhancer] = useState(false);
 
   const enhanceDescription = async () => {
     if (!description.trim()) return;
@@ -46,7 +45,7 @@ Please rewrite this as a detailed, professional project description that would h
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -54,12 +53,13 @@ Please rewrite this as a detailed, professional project description that would h
           messages: [
             {
               role: 'system',
-              content: 'You are a product manager helping to write detailed project descriptions. Take brief ideas and expand them into comprehensive, actionable descriptions that developers can understand and build from.'
+              content:
+                'You are a product manager helping to write detailed project descriptions. Take brief ideas and expand them into comprehensive, actionable descriptions that developers can understand and build from.',
             },
             {
               role: 'user',
-              content: prompt
-            }
+              content: prompt,
+            },
           ],
           max_tokens: 400,
           temperature: 0.7,
@@ -80,7 +80,6 @@ Please rewrite this as a detailed, professional project description that would h
   const useEnhancedDescription = () => {
     onUpdate('description', enhancedDescription);
     setEnhancedDescription('');
-    setShowEnhancer(false);
   };
 
   const canContinue = projectName && description && targetAudience;
@@ -98,9 +97,7 @@ Please rewrite this as a detailed, professional project description that would h
 
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Project Name
-          </label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Project Name</label>
           <input
             type="text"
             value={projectName}
@@ -115,13 +112,13 @@ Please rewrite this as a detailed, professional project description that would h
             Project Description
           </label>
           <div className="relative">
-          <textarea
-            value={description}
-            onChange={(e) => onUpdate('description', e.target.value)}
-            rows={4}
-            className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-none text-white placeholder-gray-400"
-            placeholder="Describe what you want to build and what problem it solves..."
-          />
+            <textarea
+              value={description}
+              onChange={(e) => onUpdate('description', e.target.value)}
+              rows={4}
+              className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-none text-white placeholder-gray-400"
+              placeholder="Describe what you want to build and what problem it solves..."
+            />
           </div>
 
           {/* Description Enhancer */}
@@ -153,7 +150,8 @@ Please rewrite this as a detailed, professional project description that would h
                 </button>
               </div>
               <p className="text-xs text-purple-200">
-                Our AI can help improve and expand your description with more details about features, users, and functionality.
+                Our AI can help improve and expand your description with more details about
+                features, users, and functionality.
               </p>
             </div>
           )}
@@ -164,9 +162,7 @@ Please rewrite this as a detailed, professional project description that would h
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center">
                   <Sparkles className="w-4 h-4 text-green-400 mr-2" />
-                  <span className="text-sm font-medium text-green-300">
-                    Enhanced Description
-                  </span>
+                  <span className="text-sm font-medium text-green-300">Enhanced Description</span>
                 </div>
                 <div className="flex gap-2">
                   <button
@@ -191,9 +187,7 @@ Please rewrite this as a detailed, professional project description that would h
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-2">
-            Target Audience
-          </label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Target Audience</label>
           <input
             type="text"
             value={targetAudience}

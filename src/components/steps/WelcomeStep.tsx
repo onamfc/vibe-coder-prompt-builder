@@ -16,7 +16,8 @@ export const WelcomeStep: React.FC<WelcomeStepProps> = ({ onNext }) => {
           AI Prompt Builder
         </h1>
         <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-          Transform your ideas into detailed project specifications that any AI assistant can understand and build
+          Transform your ideas into detailed project specifications that any AI assistant can
+          understand and build
         </p>
       </div>
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, X, Check, Lightbulb, Loader2 } from 'lucide-react';
-import { OpenAIService } from '../../services/openai';
 
 interface FeaturesStepProps {
   projectType: string;
@@ -12,19 +11,18 @@ interface FeaturesStepProps {
   onPrev: () => void;
 }
 
-export const FeaturesStep: React.FC<FeaturesStepProps> = ({ 
-  projectType, 
-  projectName, 
-  description, 
-  features, 
-  onUpdate, 
+export const FeaturesStep: React.FC<FeaturesStepProps> = ({
+  projectType,
+  projectName,
+  description,
+  features,
+  onUpdate,
   onNext,
-  onPrev
+  onPrev,
 }) => {
   const [newFeature, setNewFeature] = useState('');
   const [suggestedFeatures, setSuggestedFeatures] = useState<string[]>([]);
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
-  const openai = new OpenAIService();
 
   useEffect(() => {
     // Generate suggestions when component mounts with valid data
@@ -37,11 +35,11 @@ export const FeaturesStep: React.FC<FeaturesStepProps> = ({
     setLoadingSuggestions(true);
     try {
       const prompt = `For a ${projectType} project called "${projectName}" with description: "${description}", suggest 8-10 specific, actionable features that would be valuable. Return only a simple list of features, one per line, without numbers or bullets. Focus on features that are commonly needed for this type of project.`;
-      
+
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
+          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -49,12 +47,13 @@ export const FeaturesStep: React.FC<FeaturesStepProps> = ({
           messages: [
             {
               role: 'system',
-              content: 'You are helping a non-technical person understand what features their project should have. Suggest practical, essential features in simple terms.'
+              content:
+                'You are helping a non-technical person understand what features their project should have. Suggest practical, essential features in simple terms.',
             },
             {
               role: 'user',
-              content: prompt
-            }
+              content: prompt,
+            },
           ],
           max_tokens: 300,
           temperature: 0.7,
@@ -63,12 +62,13 @@ export const FeaturesStep: React.FC<FeaturesStepProps> = ({
 
       if (response.ok) {
         const data = await response.json();
-        const suggestions = data.choices[0]?.message?.content
-          ?.split('\n')
-          .map((line: string) => line.trim())
-          .filter((line: string) => line.length > 0 && !line.match(/^\d+\.?\s*/))
-          .slice(0, 10) || [];
-        
+        const suggestions =
+          data.choices[0]?.message?.content
+            ?.split('\n')
+            .map((line: string) => line.trim())
+            .filter((line: string) => line.length > 0 && !line.match(/^\d+\.?\s*/))
+            .slice(0, 10) || [];
+
         setSuggestedFeatures(suggestions);
       }
     } catch (error) {
@@ -162,9 +162,7 @@ export const FeaturesStep: React.FC<FeaturesStepProps> = ({
         <div className="space-y-6">
           {/* Add Custom Feature */}
           <div>
-            <h3 className="text-lg font-semibold text-white mb-4">
-              Add Custom Feature
-            </h3>
+            <h3 className="text-lg font-semibold text-white mb-4">Add Custom Feature</h3>
             <div className="flex gap-3">
               <input
                 type="text"
@@ -218,7 +216,8 @@ export const FeaturesStep: React.FC<FeaturesStepProps> = ({
       <div className="mt-8 text-center">
         {features.length < 3 ? (
           <div className="text-gray-400 text-sm mb-4">
-            Add at least {3 - features.length} more feature{3 - features.length !== 1 ? 's' : ''} to continue
+            Add at least {3 - features.length} more feature{3 - features.length !== 1 ? 's' : ''} to
+            continue
           </div>
         ) : (
           <div className="text-green-400 text-sm mb-4 flex items-center justify-center">

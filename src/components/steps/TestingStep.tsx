@@ -16,7 +16,7 @@ export const TestingStep: React.FC<TestingStepProps> = ({ testing, onUpdate, onN
       icon: Shield,
       description: 'Essential tests to make sure things work',
       tools: ['Manual testing', 'Browser testing'],
-      recommended: 'For simple projects'
+      recommended: 'For simple projects',
     },
     {
       id: 'comprehensive',
@@ -24,7 +24,7 @@ export const TestingStep: React.FC<TestingStepProps> = ({ testing, onUpdate, onN
       icon: Users,
       description: 'Thorough testing including user scenarios',
       tools: ['Automated tests', 'User experience testing', 'Performance testing'],
-      recommended: 'For business applications'
+      recommended: 'For business applications',
     },
     {
       id: 'advanced',
@@ -32,15 +32,15 @@ export const TestingStep: React.FC<TestingStepProps> = ({ testing, onUpdate, onN
       icon: Zap,
       description: 'Full testing suite with continuous monitoring',
       tools: ['Unit tests', 'Integration tests', 'E2E testing', 'Performance monitoring'],
-      recommended: 'For complex applications'
-    }
+      recommended: 'For complex applications',
+    },
   ];
 
   const updateTesting = (approach: string) => {
-    const selected = testingOptions.find(opt => opt.id === approach);
+    const selected = testingOptions.find((opt) => opt.id === approach);
     onUpdate({
       approach,
-      tools: selected?.tools || []
+      tools: selected?.tools || [],
     });
   };
 
@@ -50,9 +50,7 @@ export const TestingStep: React.FC<TestingStepProps> = ({ testing, onUpdate, onN
         <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
           How should we test your project?
         </h2>
-        <p className="text-gray-300">
-          Testing ensures your project works reliably for your users
-        </p>
+        <p className="text-gray-300">Testing ensures your project works reliably for your users</p>
       </div>
 
       <div className="grid gap-6 mb-8">
@@ -67,22 +65,32 @@ export const TestingStep: React.FC<TestingStepProps> = ({ testing, onUpdate, onN
             }`}
           >
             <div className="flex items-start">
-              <div className={`p-3 rounded-lg mr-4 ${
-                testing.approach === option.id ? 'bg-gradient-to-r from-purple-500 to-pink-500' : 'bg-gray-700'
-              }`}>
-                <option.icon className={`w-6 h-6 ${
-                  testing.approach === option.id ? 'text-white' : 'text-gray-400'
-                }`} />
+              <div
+                className={`p-3 rounded-lg mr-4 ${
+                  testing.approach === option.id
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-500'
+                    : 'bg-gray-700'
+                }`}
+              >
+                <option.icon
+                  className={`w-6 h-6 ${
+                    testing.approach === option.id ? 'text-white' : 'text-gray-400'
+                  }`}
+                />
               </div>
               <div className="flex-1">
-                <h3 className={`text-lg font-semibold mb-2 ${
-                  testing.approach === option.id ? 'text-white' : 'text-gray-200'
-                }`}>
+                <h3
+                  className={`text-lg font-semibold mb-2 ${
+                    testing.approach === option.id ? 'text-white' : 'text-gray-200'
+                  }`}
+                >
                   {option.title}
                 </h3>
-                <p className={`mb-3 ${
-                  testing.approach === option.id ? 'text-gray-200' : 'text-gray-400'
-                }`}>
+                <p
+                  className={`mb-3 ${
+                    testing.approach === option.id ? 'text-gray-200' : 'text-gray-400'
+                  }`}
+                >
                   {option.description}
                 </p>
                 <div className="mb-3">
@@ -97,9 +105,7 @@ export const TestingStep: React.FC<TestingStepProps> = ({ testing, onUpdate, onN
                     ))}
                   </div>
                 </div>
-                <p className="text-sm text-purple-400 font-medium">
-                  {option.recommended}
-                </p>
+                <p className="text-sm text-purple-400 font-medium">{option.recommended}</p>
               </div>
             </div>
           </button>

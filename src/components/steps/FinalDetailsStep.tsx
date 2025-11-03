@@ -11,7 +11,7 @@ export const FinalDetailsStep: React.FC<FinalDetailsStepProps> = ({
   additionalRequirements,
   onUpdate,
   onNext,
-  onPrev
+  onPrev,
 }) => {
   const addRequirement = (requirement: string) => {
     if (requirement.trim() && !additionalRequirements.includes(requirement.trim())) {
@@ -20,10 +20,11 @@ export const FinalDetailsStep: React.FC<FinalDetailsStepProps> = ({
   };
 
   const removeRequirement = (index: number) => {
-    onUpdate('additionalRequirements', additionalRequirements.filter((_, i) => i !== index));
+    onUpdate(
+      'additionalRequirements',
+      additionalRequirements.filter((_, i) => i !== index)
+    );
   };
-
-  const canContinue = true; // Always allow continuation since no required fields
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -31,19 +32,17 @@ export const FinalDetailsStep: React.FC<FinalDetailsStepProps> = ({
         <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
           Additional Requirements
         </h2>
-        <p className="text-gray-300">
-          Add any special requirements or features for your project
-        </p>
+        <p className="text-gray-300">Add any special requirements or features for your project</p>
       </div>
 
       <div className="space-y-6">
-
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-2">
             Special Requirements (Optional)
           </label>
           <p className="text-sm text-gray-400 mb-3">
-            Examples: Mobile responsive, Dark mode, Multi-language support, Analytics, SEO optimization
+            Examples: Mobile responsive, Dark mode, Multi-language support, Analytics, SEO
+            optimization
           </p>
           <div className="space-y-2">
             <input
@@ -60,7 +59,10 @@ export const FinalDetailsStep: React.FC<FinalDetailsStepProps> = ({
             {additionalRequirements.length > 0 && (
               <div className="space-y-2">
                 {additionalRequirements.map((req, index) => (
-                  <div key={index} className="flex items-center justify-between p-2 bg-purple-500/10 border border-purple-500/30 rounded-md">
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-2 bg-purple-500/10 border border-purple-500/30 rounded-md"
+                  >
                     <span className="text-sm text-gray-200">{req}</span>
                     <button
                       onClick={() => removeRequirement(index)}
