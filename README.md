@@ -34,7 +34,7 @@ The generated specifications are optimized for use with AI code generation tools
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/onamfc/vibe-coder-prompt-builder
 cd prompt-builder
 ```
 
