@@ -12,28 +12,17 @@ interface OpenAIResponse {
 }
 
 export class OpenAIService {
-  private apiKey: string;
-  private baseUrl = 'https://api.openai.com/v1';
+  private baseUrl = '/api/chat';
 
   constructor() {
-    this.apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    if (!this.apiKey) {
-      console.warn(
-        'OpenAI API key not found. Please add VITE_OPENAI_API_KEY to your .env.local file'
-      );
-    }
+    // API key is now handled server-side in the Vercel function
   }
 
   private async makeRequest(messages: OpenAIMessage[]): Promise<string> {
-    if (!this.apiKey) {
-      return 'Please add your OpenAI API key to the .env.local file to enable AI assistance.';
-    }
-
     try {
-      const response = await fetch(`${this.baseUrl}/chat/completions`, {
+      const response = await fetch(this.baseUrl, {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${this.apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -45,7 +34,8 @@ export class OpenAIService {
       });
 
       if (!response.ok) {
-        throw new Error(`OpenAI API error: ${response.statusText}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `API error: ${response.statusText}`);
       }
 
       const data: OpenAIResponse = await response.json();

@@ -45,13 +45,15 @@ npm install
 
 3. Set up environment variables:
 ```bash
-cp .env.example .env
+cp .env.example .env.local
 ```
 
-4. Add your OpenAI API key to the `.env` file:
+4. Add your OpenAI API key to the `.env.local` file:
 ```
-VITE_OPENAI_API_KEY=your_api_key_here
+OPENAI_API_KEY=your_api_key_here
 ```
+
+**Note:** The API key is now used server-side only (via `/api/chat.ts` serverless function), not exposed to the frontend browser. This prevents CORS issues and keeps your API key secure.
 
 ## Development
 
@@ -145,6 +147,8 @@ npm run lint
 
 ```
 prompt-builder/
+├── api/
+│   └── chat.ts                 # Vercel serverless function (OpenAI proxy)
 ├── src/
 │   ├── components/
 │   │   ├── steps/              # Wizard step components
@@ -161,7 +165,7 @@ prompt-builder/
 │   │   ├── AIResponse.tsx
 │   │   └── ProgressBar.tsx
 │   ├── services/
-│   │   └── openai.ts           # OpenAI API integration
+│   │   └── openai.ts           # OpenAI API client (calls /api/chat)
 │   ├── types/
 │   │   └── index.ts            # TypeScript type definitions
 │   ├── test/
@@ -173,7 +177,7 @@ prompt-builder/
 ├── public/                     # Static assets
 ├── dist/                       # Production build output
 ├── coverage/                   # Test coverage reports
-├── .env                        # Environment variables (not in repo)
+├── .env.local                  # Environment variables (not in repo)
 ├── .env.example                # Environment variables template
 ├── package.json                # Project dependencies and scripts
 ├── tsconfig.json               # TypeScript configuration
@@ -324,13 +328,23 @@ See [TESTING.md](./TESTING.md) for detailed testing guidelines.
 
 ## Environment Variables
 
-Create a `.env` file in the root directory with the following variables:
+### Local Development
+
+Create a `.env.local` file in the root directory with:
 
 ```
-VITE_OPENAI_API_KEY=your_openai_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-The `VITE_` prefix is required for Vite to expose the variable to the application.
+**Important:** The API key is now used server-side only (in the `/api/chat.ts` serverless function), not exposed to the frontend. This prevents CORS issues and keeps your API key secure.
+
+### Production Deployment (Vercel)
+
+1. Go to your Vercel project settings
+2. Navigate to Settings → Environment Variables
+3. Add `OPENAI_API_KEY` with your OpenAI API key
+4. Set it for Production, Preview, and Development environments
+5. Redeploy your application
 
 ## Browser Support
 

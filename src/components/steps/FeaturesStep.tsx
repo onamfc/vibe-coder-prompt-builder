@@ -36,10 +36,9 @@ export const FeaturesStep: React.FC<FeaturesStepProps> = ({
     try {
       const prompt = `For a ${projectType} project called "${projectName}" with description: "${description}", suggest 8-10 specific, actionable features that would be valuable. Return only a simple list of features, one per line, without numbers or bullets. Focus on features that are commonly needed for this type of project.`;
 
-      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
